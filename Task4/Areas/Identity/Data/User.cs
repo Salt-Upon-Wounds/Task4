@@ -9,9 +9,8 @@ namespace Task4.Areas.Identity.Data;
 // Add profile data for application users by adding properties to the User class
 public class User : IdentityUser
 {
-    public string Name { get; set; }
     public DateTime RegisteredAt { get; set; }
-    public DateTime lastLoggedAt { get; set; }
+    public DateTime LastLoggedAt { get; set; }
     public bool Status { get; set; }
 }
 
