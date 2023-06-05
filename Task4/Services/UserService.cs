@@ -39,7 +39,7 @@ namespace Task4.Services
                 if (user == null) continue;
                 user.Status = status;
                 if (status) user.SecurityStamp = user.SecurityStamp + "asd";
-                if (id == currentUserId) signInManager.SignOutAsync();
+                if (status && id == currentUserId) signInManager.SignOutAsync();
             }
             db.SaveChanges();
         }

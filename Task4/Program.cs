@@ -5,7 +5,7 @@ using Task4.Areas.Identity.Data;
 using Task4.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("ContextConnection") ?? throw new InvalidOperationException("Connection string 'ContextConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("prod") ?? throw new InvalidOperationException("Connection string 'ContextConnection' not found.");
 
 builder.Services.AddDbContext<Context>(options => options.UseSqlServer(connectionString));
 
