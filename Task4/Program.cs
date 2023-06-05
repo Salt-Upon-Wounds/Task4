@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Task4.Data;
 using Task4.Areas.Identity.Data;
+using Task4.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ContextConnection") ?? throw new InvalidOperationException("Connection string 'ContextConnection' not found.");
@@ -18,9 +19,10 @@ builder.Services.AddDefaultIdentity<User>(options => {
         RequireNonAlphanumeric = false,
         RequireUppercase = false
     };
+    options.User.RequireUniqueEmail = true;
 }).AddEntityFrameworkStores<Context>();
 
-// Add services to the container.
+builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
