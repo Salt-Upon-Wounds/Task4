@@ -123,6 +123,11 @@ namespace Task4.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var user = await userManager.FindByEmailAsync(Input.Email);
+                if (user.Status)
+                {
+                    ModelState.AddModelError(string.Empty, "user blocked");
+                    return Page();
+                }
                 
                 var result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)

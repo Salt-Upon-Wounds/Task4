@@ -9,7 +9,7 @@ namespace Task4.Services
     public interface IUserService
     {
         public List<User> GetUsers();
-        public void ToggleStatusById(string[] ids, ClaimsPrincipal userPrincipal);
+        public void ToggleStatusById(string[] ids, ClaimsPrincipal userPrincipal, bool status);
         public void DeleteById(string[] ids, ClaimsPrincipal userPrincipal);
     }
     public class UserService : IUserService
@@ -30,15 +30,16 @@ namespace Task4.Services
             return db.Users.ToList();
         }
 
-        public void ToggleStatusById(string[] ids, ClaimsPrincipal userPrincipal)
+        public void ToggleStatusById(string[] ids, ClaimsPrincipal userPrincipal, bool status)
         {
             var currentUserId = userPrincipal.FindFirst(ClaimTypes.NameIdentifier).Value;
             foreach(var id in ids)
             {
                 var user = db.Users.FirstOrDefault(x => x.Id == id);
                 if (user == null) continue;
-                user.Status = !user.Status;
-                if (!user.Status && id == currentUserId) signInManager.SignOutAsync();
+                user.Status = status;
+                if (status) user.SecurityStamp = user.SecurityStamp + "asd";
+                if (id == currentUserId) signInManager.SignOutAsync();
             }
             db.SaveChanges();
         }

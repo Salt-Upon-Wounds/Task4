@@ -7,42 +7,48 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 <div class="panel panel-primary">
     <div class="panel-heading">
         Учетные записи
     </div>
-    <table class="table table-striped">
-        <tr>
-            <th><input type="checkbox" class="mainSwitcher" /></th>
-            <th>Id</th>
-            <th>Имя</th>
-            <th>Email</th>
-            <th>RegisteredAt</th>
-            <th>LastLoggedAt</th>
-            <th>Status</th>
-        </tr>
-        @if (Model.Count() == 0)
-        {
+    <form asp-controller="Home">
+        <div class="d-flex align-items-center m-2">
+            <button class="btn btn-danger" asp-action="DeleteUser" type="submit">Delete</button>
+            <button class="btn btn-warning mx-2" asp-action="BlockUser" type="submit">Block</button>
+            <button class="btn btn-success" asp-action="UnblockUser" type="submit">Unblock</button>
+        </div>
+        <table class="table table-striped">
             <tr>
-                <td colspan="3" class="text-center">Нет ни одной учетной записи</td>
+                <th><input type="checkbox" class="mainSwitcher" /></th>
+                <th>Id</th>
+                <th>Имя</th>
+                <th>Email</th>
+                <th>RegisteredAt</th>
+                <th>LastLoggedAt</th>
+                <th>Status</th>
             </tr>
-        }
-        else
-        {
-            foreach (User user in Model)
+            @if (Model.Count() == 0)
             {
                 <tr>
-                    <td><input type="checkbox" name="userId" value="@user.Id" class="Switcher" /></td>
-                    <td>@user.Id</td>
-                    <td>@user.UserName</td>
-                    <td>@user.Email</td>
-                    <td>@user.RegisteredAt</td>
-                    <td>@user.LastLoggedAt</td>
-                    <td>@(user.Status ? "blocked" : "active")</td>
+                    <td colspan="3" class="text-center">Нет ни одной учетной записи</td>
                 </tr>
             }
-        }
-    </table>
+            else
+            {
+                foreach (User user in Model)
+                {
+                    <tr>
+                        <td><input type="checkbox" name="userId" value="@user.Id" class="Switcher" /></td>
+                        <td>@user.Id</td>
+                        <td>@user.UserName</td>
+                        <td>@user.Email</td>
+                        <td>@user.RegisteredAt</td>
+                        <td>@user.LastLoggedAt</td>
+                        <td>@(user.Status ? "blocked" : "active")</td>
+                    </tr>
+                }
+            }
+        </table>
+    </form>
 </div>

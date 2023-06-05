@@ -14,14 +14,19 @@ builder.Services.AddDefaultIdentity<User>(options => {
     options.Password = new PasswordOptions
     {
         RequireDigit = false,
-        RequiredLength = 6,
+        RequiredLength = 1,
         RequireLowercase = false,
         RequireNonAlphanumeric = false,
         RequireUppercase = false
     };
     options.User.RequireUniqueEmail = true;
-}).AddEntityFrameworkStores<Context>();
 
+}).AddEntityFrameworkStores<Context>();
+builder.Services.Configure<SecurityStampValidatorOptions>(options =>
+{
+    // enables immediate logout, after updating the user's stat.
+    options.ValidationInterval = TimeSpan.Zero;
+});
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
